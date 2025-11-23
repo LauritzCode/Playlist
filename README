@@ -1,0 +1,19 @@
+# Playlist
+
+This C project loads a playlist from a text file, stores the songs inside a singly linked list, lets you remove and insert songs, and then saves the modified playlist back to a new text file. The learning goal for me here is mostly to practice pointers, linked lists, memory management, and file I/O in C.
+
+The input file is called "playlist.txt" and each line in it is one track. The output is written to "playlist-out.txt" after the program deletes one track and inserts a new one.
+
+The core data structure is a singly linked list. Each node has a void\* data pointer where we store a dynamically allocated char array with the song name. The node also has a 'next' pointer pointing to the next node. Because data is a void pointer, the list can store any kind of data if needed.
+
+## Some functions
+
+The project uses a few key functions in singly_linked_list.c.
+insert_at: this function inserts a node at a specific index. If you pass index 0, the new node becomes the new head of the list.
+delete_at: deletes a node at a given index and returns the pointer to the data. The caller has to free the data.
+node_at: returns a pointer to the node at index n.
+tail: walks to the end of the list and returns the last node.
+
+In main.c, the program first loads the playlist using load_file. This function opens the text file, reads each line, removes the newline, allocates a new node and data buffer, copies the song text into it, and appends it to the list.
+
+After loading, the playlist is printed to the terminal. Then one song is removed with delete_at to demonstrate its functionality, and a new song is inserted with insert_at. Then save_file writes all tracks back to a new file, one song per line. There is also free_playlist, which goes through the list and deletes each node from the head until the list is empty. This avoids memory leaks.
